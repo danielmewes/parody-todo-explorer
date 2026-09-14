@@ -1,0 +1,6 @@
+name = "todo-list"
+display_name = "To-Do List"
+icon = "icon.svg"
+instances = false
+priority = "user"
+program = "todo-list"

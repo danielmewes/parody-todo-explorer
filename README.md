@@ -1,52 +1,67 @@
-# Your workspace
+<p align="center">
+  <img alt="Todo Explorer" src="template.svg" width="480">
+</p>
 
-This folder is your mind's home: everything it knows, everything it builds,
-and the machinery that keeps it running.
+# Todo Explorer
 
-## Creations
+<p align="center">
+  <a href="https://boweiliu.github.io/open-in-minds/?git_url=https://github.com/danielmewes/parody-todo-explorer"><img alt="Open in Minds" height="64" src="https://img.shields.io/badge/Open%20in%20Minds-D8D1C0?style=for-the-badge"></a>
+</p>
 
-Broadly, in Minds you make "creations". These can be "code" (apps, skills, and
-the services behind them) or "data" (documents, images, notes).
+Didn't work? Create a Minds workspace and paste this to your agent:
+` /use-template https://github.com/danielmewes/parody-todo-explorer`
 
-Minds makes this easier by defining some conventions for the common things
-you'll want to make:
+## Why you care
 
-1. an "app" - something you can open as a tab and interact with
-2. a "skill" - teaches your mind how to do work you care about. A skill that
-   is automatically run on a schedule is called an "automation" (the
-   machinery that runs them lives in `system/libs/automations/`; the weekly
-   Caretaker is the built-in example)
-3. some "data" - documents, images, notes, or data created by your apps and
-   skills
-4. some "customizations" - changes to any of the above. Everything in Minds
-   can be modified by you!
+Seventy-seven controls. Ten toolbars.
 
-## What's here
+Due dates, urgency, notes, categories, several lists, search across all of
+them, archiving, undo, a recoverable deleted pile, focus mode, import, export,
+print.
 
-- `apps/` - Everything you can open as a tab: the built-in apps (chat, the
-  terminal, the file viewer, the browser) and the apps your mind builds for you. (A shortcut
-  to `system/apps/`.)
-- `skills/` - Everything your mind knows how to do: the built-in skills and
-  the ones it has learned for you. (A shortcut to `.agents/skills/`.)
-- `data/` - Your workspace's data: documents and project folders, files
-  you've uploaded, your mind's memories, and each app's stored data.
-- `docs/` - Guides to this workspace: what it is, how it works, and a history
-  of where it came from.
-- `system/` - The machinery that runs the workspace: the apps themselves,
-  background services, scripts, and configuration. You can look around (every
-  folder has a README), and your mind maintains it for you.
+## How to use it
 
-A few housekeeping files live alongside them:
+Open the **To-Do List** tab.
 
-- `README.md` - This file.
-- `CLAUDE.md` - The standing instructions your mind follows.
-- `pyproject.toml` and `uv.lock` - The Python project definition; the tooling
-  requires them at the top level.
+Type a task. Press Enter. Tick the box to finish it. Del removes it.
 
-## Where things are kept safe
+| Menu | Holds |
+| --- | --- |
+| **File** | Lists, import, export (`.txt`, `.json`, `.html`), e-mail, print, offline |
+| **Edit** | Undo, redo, cut, copy, paste, rename, find, find-and-replace |
+| **View** | Toolbars, side panel, text size, seven sort orders, three groupings, stored data |
+| **Favourites** | Star, organise, jump |
+| **Tools** | Template packs, archive, de-duplicate, restore deleted, pop-up blocker, add-ons, options |
+| **Help** | Index, tip of the day, toolbar guide, shortcuts, About |
 
-The workspace is a git repository: code and configuration changes are
-committed as your mind works. Everything under `data/` is deliberately kept
-out of git (it can be large, personal, or both) and is protected by the
-workspace's continuous encrypted backup instead, along with the rest of the
-workspace. See `docs/` for details.
+Seven specialist toolbars:
+
+- **TaskFinder** searches this list, highlights matches.
+- **FindItAll Search Suite** searches every list, notes included.
+- **Chore Genie!** ready-worded jobs from five template packs.
+- **DeadlineBar Pro** due dates in one click.
+- **PriorityPal 2000** urgency markers, and Panic Mode.
+- **WeatherTask 2000** matches jobs to the weather.
+- **ShopSmart$aver** shopping list inside your task list.
+
+Focus mode shows one task.
+
+Developer notes:
+[`system/apps/todo_list/README.md`](system/apps/todo_list/README.md).
+
+## Ideas for making it yours
+
+- **An eighth toolbar.** A key in `ADDON_KEYS`, a strip in `index.html`, a
+  colour in `app.css`, a handler in `app.js`.
+- **A new assistant.** Its lines are strings in `app.js`; its glyph is one
+  symbol in `index.html`.
+- **Your own prompts.** `TIPS_OF_THE_DAY` and `GENIE_TIPS`.
+- **A wall display.** Focus mode, narrow column, toolbars hidden.
+- **Work and Home side by side.** Register a second instance.
+
+## What this is
+
+A published **minds template**: a bootable snapshot, ready to adapt.
+
+[`template.md`](template.md) is the manifest, including what you must decide.
+[`template.toml`](template.toml) is its machine-readable half.

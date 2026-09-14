@@ -1,0 +1,84 @@
+# Machine-readable manifest for this template. The sibling
+# template.md holds the prose, the Requirements list, and the two
+# append-only history logs; this file is authoritative for everything
+# below. Both are generated together -- validate_template.py fails if
+# they disagree.
+format = "v2"
+
+[template]
+slug = "todo-explorer"
+title = "Todo Explorer"
+description = "A to-do list with seventy-seven working controls, ten toolbars, and everything one click away"
+thumbnail = "template.svg"
+version = "v1"
+
+# How this template is DERIVED from the workspace it came from. An
+# update re-runs this recipe rather than diffing two repos, which is what
+# keeps an exclusion excluded even though the thing still exists upstream.
+[recipe]
+include = ["system/apps/todo_list", "system/supervisord.conf"]
+data_include = []
+exclude = [
+    "the supervisord program block for the unrelated second app (alife-digest), stripped from the overlaid system/supervisord.conf",
+    "system/apps/alife_digest -- a separate ALife digest app the source workspace also has, not part of this template",
+    "the user's own task data -- none exists server-side, because tasks live only in the visitor's browser storage",
+]
+modification_rules = [
+    "strip the unrelated second app's program block from the supervisord config, keeping only this template's",
+    "replace every browser-trademark name in the app's title, window title, about box, README and source comments with generic period-appropriate wording, leaving the visual styling untouched",
+]
+
+# Everything an adopter must deal with before this is really theirs.
+# One list -- but each entry's KIND says how it is handled, because the
+# two are handled at different times by different mechanisms:
+#
+#   permission / secret / llm = ACTIVATION. The adopting agent acts on
+#   these FIRST and BY ITSELF, initiating each latchkey permission
+#   request before asking the user anything. Every one of them must have
+#   a matching requires_ line in template.md and vice versa -- the
+#   validator checks that, because an adopter once never got prompted
+#   for a permission the app needed.
+#
+#   adaptation = worked through INTERACTIVELY with the user afterwards.
+#   Prose on both sides, so it is not cross-checked.
+#
+# There are NO activation requirements: no permission, no secret, no llm
+# entry. The app is a self-contained Flask server for three static assets and
+# keeps every task in the visitor's own browser, so it reaches no external
+# service, holds no credentials, and makes no model calls. The empty activation
+# half matches template.md, which carries no requires_ lines.
+[requirements]
+
+[[requirements.adaptation]]
+summary = "the list is per-browser: it lives in localStorage (key my-tasks.v1) and is not synced across devices"
+resolution = "for multi-device use, add read/write JSON routes to runner.py that persist under the app's DATA_DIR, and point save()/load() in app.js at them instead of localStorage"
+
+[[requirements.adaptation]]
+summary = "the task templates are hardcoded British-English household chores (TEMPLATE_PACKS and EXTRA_PACKS in app.js)"
+resolution = "rewrite the packs and their group names for the adopter's own life, work and dialect, since they are what Tools > Task templates inserts"
+
+[[requirements.adaptation]]
+summary = "the WeatherTask 2000 toolbar shows deterministic fake weather derived from the date (WEATHER_STATES / weatherFor in app.js), not a real forecast"
+resolution = "keep it as labelled decoration, or wire weatherFor() to a real weather API keyed on the user's location"
+
+[[requirements.adaptation]]
+summary = "the late-nineties styling is strongly opinionated and lives entirely in app.css plus the toolbar markup in index.html"
+resolution = "decide how much of the styling to keep; the extension toolbars can be hidden at runtime via View > Toolbars, but restyling the window itself is a code change in app.css"
+
+[[requirements.adaptation]]
+summary = "the interface wording is British English throughout (Favourites, Organise, Synchronise, a fortnight) across menus, dialogs and status messages in app.js"
+resolution = "go through those strings if the adopter's audience expects another dialect"
+
+# What the included code needs INSTALLED. apt takes bare names: versions
+# are a function of the apt snapshot timestamp, so replaying names at the
+# adopter's timestamp yields versions consistent with the rest of their
+# environment. The other sources are not snapshot-pinned, so for them the
+# recorded version IS the pin (name = version).
+#
+# Nothing extra is needed. The app's only dependencies are Flask and Werkzeug,
+# declared in its own system/apps/todo_list/pyproject.toml and installed by the
+# workspace's normal package install. It shells out to no binaries and invokes
+# no global npm/uv/cargo tools, so every table below is deliberately empty.
+[environment]
+apt = []
+env_d_units = []
